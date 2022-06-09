@@ -1,0 +1,25 @@
+﻿@{
+	ViewBag.Title="NotFound";
+}
+@*Custom error sayfası*@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="error-template">
+                <h1>
+                    Hata!</h1>
+                <h2>
+                    404 </h2>
+                <div class="error-details">
+                    İstediğiniz sayfaya ulaşılamadı
+                </div>
+                <div class="error-actions">
+                    @*Ana sayfaya dönüş butonu*@
+                    <a asp-action="Index" asp-controller="Music" class="btn btn-primary btn-lg">Ana Sayfaya Dön </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

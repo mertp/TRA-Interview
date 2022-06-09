@@ -1,0 +1,69 @@
+﻿@model Music
+
+<form method="post" id="deleteSong" asp-action="Delete">
+	<input asp-for="Id" hidden />
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">Şarkıyı Sil</h2>
+			<hr />
+		</div>
+		@*<div asp-validation-summary="All"></div>*@
+		<div class="mb-3">
+			<label>Şarkı ismi</label>
+			<input asp-for="SongName" class="form-control" />
+			<span asp-validation-for="SongName" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label>Şarkı Süresi</label>
+			<input asp-for="SongTime" class="form-control" />
+			<span asp-validation-for="SongTime" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="Artist"></label>
+			<input asp-for="Artist" class="form-control" />
+			<span asp-validation-for="Artist" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label>Albüm İsmi</label>
+			<input asp-for="AlbumName" class="form-control" />
+			<span asp-validation-for="AlbumName" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label>Çıkış Yılı</label>
+			<input asp-for="ReleaseDate" class="form-control" />
+			<span asp-validation-for="ReleaseDate" class="text-danger"></span>
+		</div>
+		<button type="submit" class="btn btn-primary" onclick="submitSong()" style="width:150px">Sil</button>
+		<a asp-controller="Music" asp-action="Index" class="btn btn-secondary" style="width:150px">
+			Listeye Dön
+		</a>
+	</div>
+</form>
+
+<script type="text/javascript">
+    function submitSong() {
+        var data = $("#deleteSong").serialize();
+        console.log(data);
+        alert(data);
+        $.ajax({
+            type: 'POST',
+            url: '/Music/Delete',
+            //contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+            data: data,
+            success: function () {
+                alert('Şarkı başarıyla silindi');
+                //console.log(result);
+            },
+            error: function () {
+                alert('Failed to receive the Data');
+                console.log('Failed ');
+            }
+        })
+    }
+
+</script>
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Music>
+@{
+	ViewData["Title"]="Index";
+}
+@*Tempdatanın yapılan işleme göre değişmesi ve Index viewına eklenmesi*@
+@if(TempData["success"]!=null){
+	<h2>@TempData["success"]</h2>
+}
+
+@*Bootstrap ile tablo yapısı*@
+<div class="card-body">
+            <h5 class="card-title">Müzik Listesi</h5>
+            <div class="card float-end">
+                <a href="/music/create"  class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;&nbsp;Şarkı Ekle</a>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Şarkı İsmi</th>
+                    <th>Albüm İsmi</th>
+                    <th>Artist</th>
+                    <th>Şarkı Süresi</th>
+                    <th>Çıkış Yılı</th>
+                    <th colspan="2" style="text-align: center;">İşlemler</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @*Modelden gelen verilerin foreach döngüsü yardımıyla listelenmesi*@
+        @foreach(var obj in Model)
+        {
+            <tr>
+                <td>
+                    @obj.Id
+				</td>
+                <td>
+                    @obj.SongName
+				</td>
+                <td>
+                    @obj.AlbumName
+				</td>
+                <td>
+                    @obj.Artist
+				</td>
+                <td>
+                    @obj.SongTime
+				</td>
+                <td>
+                    @obj.ReleaseDate
+				</td>
+                <td>
+                    @*Güncelleme ve silme butonlarına tag helperlar kullanılarak link ataması yapılması*@
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="Music" asp-action="Edit" asp-route-id="@obj.Id"
+                        class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Düzenle</a>
+                        <a asp-controller="Music" asp-action="Delete" asp-route-id="@obj.Id"
+                        class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Sil</a>
+					</div>
+				</td>
+			</tr>
+        }
+    </tbody>
+
+            </table>
+            </div>

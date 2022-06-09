@@ -1,0 +1,76 @@
+﻿@model Music
+
+@*
+Form serialization için forma id verilmesi
+*@
+<form id="submitSongId" method="post">
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">Şarkı Ekle</h2>
+			<hr />
+		</div>
+		@*Tag helperlar kullanılarak modelin attributelarının input olarak alınması*@
+		<div class="mb-3">
+			<label>Id</label>
+			<input asp-for="Id" class="form-control" itemid="id" />
+			<span asp-validation-for="Id" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label>Şarkı ismi</label>
+			<input asp-for="SongName" class="form-control" id="songname" />
+			<span asp-validation-for="SongName" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label>Şarkı Süresi</label>
+			<input asp-for="SongTime" class="form-control" id="songtime"/>
+			<span asp-validation-for="SongTime" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="Artist"></label>
+			<input asp-for="Artist" class="form-control" id="artist"/>
+			<span asp-validation-for="Artist" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label>Albüm İsmi</label>
+			<input asp-for="AlbumName" class="form-control" id="albumname"/>
+			<span asp-validation-for="AlbumName" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label>Çıkış Yılı</label>
+			<input asp-for="ReleaseDate" class="form-control" id="releasedate"/>
+			<span asp-validation-for="ReleaseDate" class="text-danger"></span>
+		</div>
+		@*Buttonların yaratılması ve onclick eventine ajax requestin atanması*@
+		<button type="submit" class="btn btn-primary" onclick="submitSong()" style="width:150px">Ekle</button>
+		<a asp-controller="Music" asp-action="Index" class="btn btn-secondary" style="width:150px">
+			Listeye Dön
+		</a>
+	</div>
+</form>
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}
+
+@*Ajax Request*@
+    <script type="text/javascript">
+
+        var post = function () {
+			@*Form serializing*@
+            var data = $("#submitSongId").serialize();          
+            $.ajax({
+                type: "POST",
+                url: "/Home/Music",
+                data: data,// $('#studentInfoId').serialize(),
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (response) {
+                    alert("Hello")
+                },
+                 error: function () {
+                    alert('Failed to receive the Data');
+                    console.log('Failed ');
+                }
+            });
+        };
+    </script>
